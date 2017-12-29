@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">ISS Pass Times</string>
+    <string name="error_status_text">We are unable to show ISS pass times for your location at this moment.  Please try again later.</string>
+    <string name="loading_status_text">Please wait…</string>
+    <string name="expected_duration">Expected Duration</string>
+    <string name="expected_time">Expected Time</string>
+    <string name="success_status_text">ISS pass times for your location are shown below</string>
+</resources>
