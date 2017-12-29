@@ -43,10 +43,15 @@ public class HomeScreenActivity extends AppCompatActivity  implements LocationLi
         list = findViewById(R.id.pass_times_list);
         list.setLayoutManager(new LinearLayoutManager(this));
 
-        //check user permission
-        checkLocationPermission();
         //initialize data helper
         dataHelper = new DataHelper();
+    }
+
+    @Override
+    public void onPostResume(){
+        //check user permission
+        checkLocationPermission();
+        super.onPostResume();
     }
 
     /*
@@ -83,6 +88,7 @@ public class HomeScreenActivity extends AppCompatActivity  implements LocationLi
                     PERMISSIONS_REQUEST_INTERNET);
         } else {
             //permission already granted, call method to request user location
+            status.setText(R.string.loading_status_text);
             retrieveUserLocation();
         }
     }
@@ -97,6 +103,8 @@ public class HomeScreenActivity extends AppCompatActivity  implements LocationLi
                 if(locationPermissionGranted){
                     //check internet permission is granted
                     checkInternetPermission();
+                } else {
+                    showError(R.string.no_permission_status_text);
                 }
                 break;
             }
@@ -105,7 +113,10 @@ public class HomeScreenActivity extends AppCompatActivity  implements LocationLi
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED;
                 if(internetPermissionGranted){
                     //call method to request user location
+                    status.setText(R.string.loading_status_text);
                     retrieveUserLocation();
+                } else {
+                    showError(R.string.no_permission_status_text);
                 }
                 break;
             }
@@ -114,10 +125,10 @@ public class HomeScreenActivity extends AppCompatActivity  implements LocationLi
 
     @Override
     public void onLocationChanged(Location location) {
-        //todo retrieve pass times
+        //retrieve pass times
         if (location != null) {
-            if(userLocation == null){
-                //first retrieval so set location and request times
+            if(userLocation == null || userLocation != location){
+                //first retrieval so set new location and request times
                 userLocation = location;
                 //use datahelper class to make service call to get pass times
                 //also set datahelper listener to receive data
@@ -130,20 +141,20 @@ public class HomeScreenActivity extends AppCompatActivity  implements LocationLi
                                     showList(responseList);
                                 } else {
                                     //call method to show error message
-                                    showError();
+                                    showError(R.string.error_status_text);
                                 }
                             }
 
                             @Override
                             public void onDataFailed() {
                                 //call method to show error message
-                                showError();
+                                showError(R.string.error_status_text);
                             }
                         });
             }
         } else {
             //call method to show error message
-            showError();
+            showError(R.string.error_status_text);
         }
     }
 
@@ -171,7 +182,7 @@ public class HomeScreenActivity extends AppCompatActivity  implements LocationLi
         if (locationManager != null) {
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
         } else {
-            showError();
+            showError(R.string.error_status_text);
         }
     }
 
@@ -188,8 +199,8 @@ public class HomeScreenActivity extends AppCompatActivity  implements LocationLi
     /*
     Displays error message for user
      */
-    private void showError(){
-        status.setText(R.string.error_status_text);
+    private void showError(int message){
+        status.setText(message);
         list.setVisibility(View.GONE);
     }
 }
