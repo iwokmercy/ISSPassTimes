@@ -1,6 +1,5 @@
 package com.example.mjexco.isspasstimes.adapters;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
@@ -23,11 +22,11 @@ import java.util.TimeZone;
  * Adapter class to display ISS pass times in Recycler View
  */
 
-public class IssPassTimesListAdapet extends RecyclerView.Adapter<IssPassTimesListAdapet.PassTimesViewHolder>{
+public class IssPassTimesListAdapter extends RecyclerView.Adapter<IssPassTimesListAdapter.PassTimesViewHolder>{
     private List<Response> passTimes;
     private int itemView;
 
-    public IssPassTimesListAdapet(List<Response> passTimes, int itemView) {
+    public IssPassTimesListAdapter(List<Response> passTimes, int itemView) {
         this.passTimes = passTimes;
         this.itemView = itemView;
     }
