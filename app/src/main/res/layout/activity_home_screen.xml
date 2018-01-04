@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:layout_margin="16dp"
-    tools:context="com.example.mjexco.isspasstimes.ui.HomeScreenActivity">
+    tools:context="com.example.mjexco.isspasstimes.views.HomeScreenActivity">
 
     <TextView
         android:layout_width="wrap_content"

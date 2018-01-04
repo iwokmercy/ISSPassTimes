@@ -1,4 +1,4 @@
-package com.example.mjexco.isspasstimes.apis;
+package com.example.mjexco.isspasstimes.backend;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;

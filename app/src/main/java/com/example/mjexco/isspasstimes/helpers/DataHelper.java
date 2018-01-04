@@ -9,9 +9,8 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
-import com.example.mjexco.isspasstimes.R;
-import com.example.mjexco.isspasstimes.apis.RestClient;
-import com.example.mjexco.isspasstimes.apis.RestInterface;
+import com.example.mjexco.isspasstimes.backend.RestClient;
+import com.example.mjexco.isspasstimes.backend.RestInterface;
 import com.example.mjexco.isspasstimes.objects.IssPassTimesResponse;
 
 import java.util.List;

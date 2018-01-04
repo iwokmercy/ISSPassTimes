@@ -40,7 +40,7 @@ public class IssPassTimesListAdapter extends RecyclerView.Adapter<IssPassTimesLi
     @Override
     public void onBindViewHolder(PassTimesViewHolder holder, int position) {
         holder.timeStamp.setText(getTimeStamp(passTimes.get(position).getRisetime()));
-        holder.duration.setText(String.format("%ds", passTimes.get(position).getDuration()));
+        holder.duration.setText(String.format(Locale.US, "%ds", passTimes.get(position).getDuration()));
     }
 
     /**
