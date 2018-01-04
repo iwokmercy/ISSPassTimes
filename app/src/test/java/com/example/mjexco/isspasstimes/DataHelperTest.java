@@ -15,7 +15,6 @@ import java.util.List;
 public class DataHelperTest {
     private DataHelper helper;
     private double lat, lon;
-    private DataHelper.DataHelperListener listener;
     private List<Response> response;
     private boolean dataRetrievalPassed;
 
@@ -24,7 +23,7 @@ public class DataHelperTest {
         helper = new DataHelper();
         lat = 40.7128;
         lon = 74.0060;
-        listener = new DataHelper.DataHelperListener() {
+        DataHelper.DataHelperListener listener = new DataHelper.DataHelperListener() {
             @Override
             public void onDataRetrieved(List<Response> responseList) {
                 response = responseList;
@@ -36,14 +35,25 @@ public class DataHelperTest {
                 response = null;
                 dataRetrievalPassed = false;
             }
+
+            @Override
+            public void onPermissionsGranted() {
+
+            }
+
+            @Override
+            public void onPermissionsDenied() {
+
+            }
         };
+        helper.setListener(listener);
     }
 
     @Test
     public void checkSetUp(){
         //check that helper and listener was initialized
         assertNotNull("Helper not initialized", helper);
-        assertNotNull("Listener not initialized", listener);
+        assertNotNull("Listener not initialized", helper.getListener());
 
         //check that lat and lon values were correctly assigned
         assertEquals("Value incorrect", 40.7128, lat, 0);
@@ -53,7 +63,7 @@ public class DataHelperTest {
     @Test
     public void testDataRetrieval(){
         //call method
-        helper.getIssPassTimes(lat, lon, listener);
+        helper.getIssPassTimes(lat, lon);
         //check service response to determine which listener was triggered
         if(dataRetrievalPassed){
             //onDataRetrieved was triggered so response should not be null

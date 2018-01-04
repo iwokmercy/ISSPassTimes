@@ -21,6 +21,7 @@ import retrofit2.Callback;
 
 /**
  * Helper class that retrieves ISS pass times for given location and returns the list to the view for update
+ * It also helps the view check user permissions and returns the result for further action
  */
 
 public class DataHelper {
@@ -29,9 +30,13 @@ public class DataHelper {
 
     //Interface to be implemented by view to facilitate communication with Helper
     public interface DataHelperListener {
+        //used to pass retrieved data to view
         void onDataRetrieved(List<com.example.mjexco.isspasstimes.objects.Response> responseList);
+        //used to notify view that data retrieval failed
         void onDataFailed();
+        //used to notify view that user permissions have been granted
         void onPermissionsGranted();
+        //used to notify view that user permissions have been denied
         void onPermissionsDenied();
     }
 
@@ -65,12 +70,20 @@ public class DataHelper {
         });
     }
 
+    /**
+     * Used by view to set listener for communication
+     * @param dataHelperListener listener passed by view
+     */
     public void setListener(DataHelperListener dataHelperListener){
         listener = dataHelperListener;
     }
 
+    public DataHelperListener getListener(){
+        return listener;
+    }
+
     /**
-     * Checks if user has granted necessary permissions. If permissions have not bee
+     * Checks if user has granted necessary permissions. If permissions have not been
      * granted, they will be requested
      * @param context Activity context
      */
@@ -86,6 +99,7 @@ public class DataHelper {
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.INTERNET},
                     PERMISSIONS_REQUEST);
         } else {
+            //notify view that permission has been granted
             listener.onPermissionsGranted();
         }
     }
@@ -100,9 +114,10 @@ public class DataHelper {
                 boolean locationPermissionGranted = grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED;
                 if(locationPermissionGranted){
-                    //check internet permission is granted
+                    //notify view that permission has been granted
                     listener.onPermissionsGranted();
                 } else {
+                    //notify view that permission has been denied
                     listener.onPermissionsDenied();
                 }
                 break;

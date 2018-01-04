@@ -68,6 +68,7 @@ public class HomeScreenActivity extends AppCompatActivity  implements LocationLi
 
             @Override
             public void onPermissionsDenied() {
+                //call method to show error message
                 showError(R.string.no_permission_status_text);
             }
         };
@@ -88,6 +89,7 @@ public class HomeScreenActivity extends AppCompatActivity  implements LocationLi
     public void onRequestPermissionsResult(int requestCode,
                                            @NonNull String permissions[], @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        //send results to helper for processing
         dataHelper.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
