@@ -6,4 +6,7 @@
     <string name="expected_time">Expected Time</string>
     <string name="success_status_text">ISS pass times for your location are shown below</string>
     <string name="no_permission_status_text">Please provide required permissions to see ISS pass times for your location.</string>
+    <string name="location_label">Location:</string>
+    <string name="placeholder_txt">You are here!</string>
+    <string name="please_wait">Please wait...</string>
 </resources>

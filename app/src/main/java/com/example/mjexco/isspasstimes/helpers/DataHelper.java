@@ -4,6 +4,8 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -13,7 +15,9 @@ import com.example.mjexco.isspasstimes.backend.RestClient;
 import com.example.mjexco.isspasstimes.backend.RestInterface;
 import com.example.mjexco.isspasstimes.objects.IssPassTimesResponse;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -123,4 +127,39 @@ public class DataHelper {
             }
         }
     }
+
+    /**
+     * Retrieves the address of the given location
+     * @param context application context
+     * @param latitude location latitude
+     * @param longitude location longitude
+     * @return location address
+     */
+    public String getAddressFromLocation(@NonNull Context context, @NonNull double latitude, @NonNull double longitude) {
+        Geocoder geocoder = new Geocoder(context, Locale.ENGLISH);
+        String address = "";
+
+        try {
+            List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
+
+            if (addresses.size() > 0) {
+                Address fetchedAddress = addresses.get(0);
+                StringBuilder strAddress = new StringBuilder();
+                for (int i = 0; i <= fetchedAddress.getMaxAddressLineIndex(); i++) {
+                    strAddress.append(fetchedAddress.getAddressLine(i)).append(" ");
+                }
+
+                address = strAddress.toString();
+
+            } else {
+                address = "Searching Current Address...";
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            address = "Unable to retrieve address";
+        }
+        return address;
+    }
+
 }

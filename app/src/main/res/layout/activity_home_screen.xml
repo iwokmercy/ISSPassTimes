@@ -1,26 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<android.support.design.widget.CoordinatorLayout
+    android:id="@+id/main_content"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:layout_margin="16dp"
+    android:background="@color/screen_background"
     tools:context="com.example.mjexco.isspasstimes.views.HomeScreenActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/status_text"
-        android:text="@string/loading_status_text"
-        android:textSize="16sp"
-        android:textStyle="bold|italic"
-        android:visibility="visible"/>
-
-    <android.support.v7.widget.RecyclerView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/pass_times_list"
-        android:visibility="gone"/>
+        android:orientation="vertical"
+        android:id="@+id/layout"
+        android:layout_margin="16dp">
 
-</LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/status_text"
+            android:text="@string/loading_status_text"
+            android:textSize="16sp"
+            android:textStyle="bold|italic"
+            android:visibility="gone"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/address_layout"
+            android:padding="5dp"
+            android:visibility="visible"
+            android:background="@color/location_layout_bckgrnd">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/location_label"
+                android:textColor="#ffffff"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#ffffff"
+                android:layout_marginBottom="5dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#ffffff"
+                android:text="@string/placeholder_txt"
+                android:id="@+id/address"
+                android:layout_marginBottom="5dp"/>
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:id="@+id/loading_layout"
+            android:layout_gravity="center"
+            >
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/loading"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/loading"
+                android:layout_centerVertical="true"
+                android:text="@string/please_wait"/>
+        </RelativeLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/pass_times_list"
+            app:layout_anchor="@id/address_layout"
+            app:layout_anchorGravity="bottom"
+            android:layout_gravity="bottom"
+            android:visibility="gone"/>
+
+    </LinearLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_margin="16dp"
+        android:id="@+id/refresh_button"
+        app:backgroundTint="@color/colorAccent"
+        android:src="@drawable/refresh"
+        />
+
+</android.support.design.widget.CoordinatorLayout>
